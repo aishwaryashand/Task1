@@ -10,9 +10,10 @@ login_url = 'http://alliancebschool.org/studentportal/aced/results/php/results.p
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0'}
 
 def login(params):
-	if not os.path.exists(constant.path_to_file+str(date.today())):
-		os.mkdir(str(date.today()))
-	path = constant.path_to_file+str(date.today())+"/"+params.dob+"_"+params.roll_no+".html"
+	if not os.path.exists(constant.path_to_file+str((date.today()).strftime("%y%m%d"))):
+		os.mkdir(str((date.today()).strftime("%y%m%d")))
+	path = constant.path_to_file+str((date.today()).strftime("%y%m%d"))+"/"+params.dob+"_"+params.roll_no+".html"
+
 	values = {
 		'tregno': params.roll_no,
 		'tdob': params.dob,
@@ -26,7 +27,7 @@ def login(params):
 		with open(path,"wb") as f:
 			f.write(r.content)
 		# result = upload_file(dob+".py","s3")
-		return path,response
+		return constant.html_file_path+path[path.find('rest'):],response
 
 if __name__ == "__main__":
 	login(dob,roll_no)
