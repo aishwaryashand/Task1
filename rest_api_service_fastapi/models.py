@@ -35,7 +35,7 @@ class RequestResponse(Base):
     request_id = Column(Integer, primary_key=True, index=True)
     univ_id = Column(Integer)
     roll_no = Column(String(200))
-    dob = Column(String(100))    
+    dob = Column(String(100))
     response_url = Column(String(200))
     request_data = Column(String(1000))
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
