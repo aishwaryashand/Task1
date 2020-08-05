@@ -105,7 +105,7 @@ async def get_api_params_by_univ_id(univ_id,current_user:UserInfo=Depends(get_cu
     return crud.get_params_by_univ_id(db=db,univ_id=univ_id)
 
 import pandas
-@app.post("/getResult",response_model=RequestResponse)
+@app.post("/getResult",response_model=RequestResponse,response_model_exclude_unset=True)
 async def create_new_request_response(request: schemas.RequestResponseBase,current_user:UserInfo=Depends(get_current_user),db:Session=Depends(get_db)):
 
     db_data = crud.get_params_by_univ_id(db=db,univ_id=request.univ_id)
