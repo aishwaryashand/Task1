@@ -118,7 +118,8 @@ async def create_new_request_response(request: schemas.RequestResponseBase,curre
     request_params = request_data.keys()
     for x in db_params:
         if (x in request_params and request_data[x] != None):
-            pass
+            if 'sem' in db_params:
+                sem_err = request.sem
         else:
             sem_err = "Missing field sem"
 
