@@ -4,6 +4,9 @@ from jwt import PyJWTError
 from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException,Request
 from starlette import status
+import pandas
+import sys
+import os
 
 import crud
 import models
@@ -104,7 +107,7 @@ async def get_blog_by_id(blog_id, current_user: UserInfo = Depends(get_current_u
 async def get_api_params_by_univ_id(univ_id,current_user:UserInfo=Depends(get_current_user),db:Session=Depends(get_db)):
     return crud.get_params_by_univ_id(db=db,univ_id=univ_id)
 
-import pandas
+
 @app.post("/getResult",response_model=RequestResponse,response_model_exclude_unset=True)
 async def create_new_request_response(request: schemas.RequestResponseBase,current_user:UserInfo=Depends(get_current_user),db:Session=Depends(get_db)):
 
@@ -121,8 +124,8 @@ async def create_new_request_response(request: schemas.RequestResponseBase,curre
             if 'sem' in db_params:
                 sem_err = request.sem
         else:
-            sem_err = "Missing field sem"
-
+            sem_err = ""
+    sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/script")
     module = __import__(str(request.univ_id))
     path,response = module.login(request)
     request.response_url = path
